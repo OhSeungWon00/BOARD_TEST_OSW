@@ -30,10 +30,13 @@
             <th:block th:each="board : ${boardList}">
                 <tr>
                     <td><span th:text="${board.no}"></span></td>
-                    <td th:text="${board.title}"></td>
+                    <td><a href="" th:href="|/board/read?no=${board.no}|"
+                        th:text="${board.title}">
+                 제목
+             </a></td>
                     <td th:text="${board.writer}"></td>
-                    <td th:text="${board.createdAt}"></td>
-                    <td th:text="${board.updatedAt}"></td>
+                    <td th:text="${ #dates.format( board.createdAt, 'yyyy-MM-dd HH:mm:ss' ) }"></td>
+                    <td th:text="${ #dates.format( board.updatedAt, 'yyyy-MM-dd HH:mm:ss' ) }"></td>
                 </tr>
             </th:block>
         </tbody>

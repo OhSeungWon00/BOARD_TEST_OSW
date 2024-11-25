@@ -45,14 +45,14 @@ public class BoardController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/select")
+    @GetMapping("/read")
     public String select(Model model, @RequestParam("no") int no) throws Exception {
 
         // 게시글 조회
         Board board = boardService.select(no);
         model.addAttribute("board", board);
 
-        return "/board/select";
+        return "/board/read";
     }
 
     /**
@@ -91,9 +91,9 @@ public class BoardController {
      * @throws Exception
      */
     @GetMapping("update")
-    public String update(Model model, @RequestParam("id") int id) throws Exception {
+    public String update(Model model, @RequestParam("no") int no) throws Exception {
 
-        Board board = boardService.select(id);
+        Board board = boardService.select(no);
         model.addAttribute("board", board);
 
         return "/board/update";
@@ -112,17 +112,17 @@ public class BoardController {
             
             return "redirect:/board/list";
         }
-        return "redirect:/board/update?error&id="+board.getNo();
+        return "redirect:/board/update?error&no="+board.getNo();
     }
 
 
    // 삭제 처리
    @PostMapping("/delete")
-   public String delete(@RequestParam("id") int id) throws Exception {
-       int result = boardService.delete(id);
+   public String delete(@RequestParam("no") int no) throws Exception {
+       int result = boardService.delete(no);
        if( result > 0 ) 
            return "redirect:/board/list";
-       return "redirect:/board/update?error&id="+id;
+       return "redirect:/board/update?error&no="+no;
    }
         
     }

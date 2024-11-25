@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 등록 -->
 <insert id="insert" useGeneratedKeys="true" keyProperty="no">
-    INSERT INTO board ( no, title, writer, content)
-    VALUES ( #{no}, #{title}, #{writer}, #{content} )
+    INSERT INTO board ( title, writer, content)
+    VALUES ( #{title}, #{writer}, #{content} )
 </insert>
 
 <!-- 수정 -->
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET title = #{title}
             ,writer = #{writer}
             ,content = #{content}
-            ,updatedAt = now()
+            ,updated_at = now()
     WHERE no = #{no}        
 </update>
 
