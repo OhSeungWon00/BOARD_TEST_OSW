@@ -1,13 +1,13 @@
-package com.aloha.board_test;
+package com.aloha.test_board;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BoardTestApplication {
+public class TestBoardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BoardTestApplication.class, args);
+		SpringApplication.run(TestBoardApplication.class, args);
 	}
 
 }
