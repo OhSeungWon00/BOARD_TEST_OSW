@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aloha.test_board.dto.Board;
+import com.aloha.test_board.dto.Option;
+import com.aloha.test_board.dto.Page;
 import com.aloha.test_board.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +26,36 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    /**
+     /**
      * 목록
-     * 
-     * @param model
      * @return
-     * @throws Exception
-     */
+     * @throws Exception 
+    */
     @GetMapping("/list")
-    public String list(Model model) throws Exception {
-        List<Board> boardList = boardService.list();
+    public String list(Model model
+                        , Option option
+                        , Page page
+                     ) throws Exception {
+        List<Board> boardList = boardService.list(option, page);
+        log.info("###################################################");
+        log.info(boardList.toString());
+        log.info("###################################################");
+        
         model.addAttribute("boardList", boardList);
+        model.addAttribute("option", option);
+        model.addAttribute("rows", page.getRows());
+        model.addAttribute("page", page);
+
+        String pageUrl = UriComponentsBuilder.fromPath("/board/list")
+                            .queryParam("keyword", option.getKeyword())
+                            .queryParam("code", option.getCode())
+                            .queryParam("rows", page.getRows())
+                            .queryParam("orderCode", option.getOrderCode())
+                            .build()
+                            .toUriString();
+
+        model.addAttribute("pageUrl", pageUrl);
+
         return "/board/list";
     }
 

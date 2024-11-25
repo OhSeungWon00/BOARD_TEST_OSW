@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="list" resultType="Board">
         SELECT *
         FROM board
+          LIMIT #{page.index}, #{page.rows}
 </select>
 
 <!-- 조회 -->
@@ -41,5 +42,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM board
     WHERE no = #{no}
 </delete>
+
+
+ <!-- 데이터 개수 -->
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+          FROM board
+        WHERE 
+            <if test="option.code == 0">
+                    title LIKE CONCAT('%', #{option.keyword}, '%')
+                OR content LIKE CONCAT('%', #{option.keyword}, '%') 
+            </if>
+            <if test="option.code == 1">
+                    title LIKE CONCAT('%', #{option.keyword}, '%')
+            </if>
+            <if test="option.code == 2">
+                content LIKE CONCAT('%', #{option.keyword}, '%') 
+            </if>
+            <if test="option.code == 3">
+                    title LIKE CONCAT('%', #{option.keyword}, '%')
+                OR content LIKE CONCAT('%', #{option.keyword}, '%') 
+            </if>
+            <if test="option.code == 4">
+            </if>
+    </select>
 
 </mapper>

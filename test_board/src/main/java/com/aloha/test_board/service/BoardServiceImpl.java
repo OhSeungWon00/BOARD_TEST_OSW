@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aloha.test_board.dto.Board;
+import com.aloha.test_board.dto.Option;
+import com.aloha.test_board.dto.Page;
 import com.aloha.test_board.mapper.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 목록
     @Override
     public List<Board> list() throws Exception {
-        List<Board> list = boardMapper.list();
+        List<Board> list = boardMapper.list(new Option(), new Page());
         return list;
     }
 
@@ -52,6 +54,21 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
- 
+
+    @Override
+    public int count(Option option) throws Exception {
+        return boardMapper.count(option);
+    }
+
+    @Override
+    public List<Board> list(Option option, Page page) throws Exception {
+        // 데이터 개수 
+        int total = count(option);
+        page.setTotal(total);
+        
+        List<Board> boardList = boardMapper.list(option, page);
+
+        return boardList;
+    }
 
 }
